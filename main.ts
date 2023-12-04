@@ -1,5 +1,9 @@
 class Node {
-  constructor(data) {
+  data: number;
+  left: Node | null;
+  right: Node | null;
+
+  constructor(data: number) {
     this.data = data;
     this.left = null;
     this.right = null;
@@ -7,19 +11,20 @@ class Node {
 }
 
 export class Tree {
-  constructor(arr) {
+  root: Node | null;
+
+  constructor(arr: number[]) {
     this.root = buildTree(arr);
   }
 }
 
-function buildTree(arr) {
+function buildTree(arr: number[]) {
   if (arr.length === 0) {
     return null;
   }
   if (!checkSorted(arr)) {
     arr.sort((a, b) => a - b);
     arr = arr.filter(checkDuplicate);
-    console.log(arr);
   }
 
   const mid = Math.floor(arr.length / 2);
@@ -31,17 +36,17 @@ function buildTree(arr) {
   return root;
 }
 
-function checkDuplicate(value, index, array) {
+function checkDuplicate(value: number, index: number, array: number[]) {
   return index === 0 || value !== array[index - 1];
 }
 
-function checkSorted(arr) {
+function checkSorted(arr: number[]) {
   return arr.every(
     (value, index, array) => index === 0 || value > array[index - 1]
   );
 }
 
-export function prettyPrint(node, prefix = "", isLeft = true) {
+export function prettyPrint(node: Node, prefix = "", isLeft = true) {
   if (node === null) {
     return;
   }
