@@ -1,5 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts";
-import { Tree } from "./main.ts";
+import { Node } from "./Node.ts";
+import { Tree } from "./Tree.ts";
 
 Deno.test(function buildEmptyTreeTest() {
   const arr: number[] = [];
@@ -55,4 +56,18 @@ Deno.test(function longArrTest() {
   const tree = new Tree(arr);
 
   assertEquals(tree.root?.data, 8);
+  prettyPrint(tree.root);
 });
+
+function prettyPrint(node: Node | null, prefix = "", isLeft = true) {
+  if (node === null) {
+    return;
+  }
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+}
