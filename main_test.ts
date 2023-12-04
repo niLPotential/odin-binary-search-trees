@@ -59,6 +59,23 @@ Deno.test(function longArrTest() {
   prettyPrint(tree.root);
 });
 
+Deno.test(function insertTest() {
+  const arr = [1, 7, 3, 9, 5];
+  const tree = new Tree(arr);
+
+  prettyPrint(tree.root);
+  assertEquals(tree.root?.data, 5);
+
+  tree.insert(0);
+  tree.insert(2);
+  tree.insert(4);
+  tree.insert(6);
+  tree.insert(8);
+  tree.insert(10);
+  tree.insert(5); // Does nothing
+  prettyPrint(tree.root);
+});
+
 function prettyPrint(node: Node | null, prefix = "", isLeft = true) {
   if (node === null) {
     return;

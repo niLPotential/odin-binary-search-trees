@@ -7,6 +7,32 @@ export class Tree {
   constructor(arr: number[]) {
     this.root = buildTree(arr);
   }
+
+  insert(value: number) {
+    let node = this.root;
+
+    while (node !== null) {
+      if (value < node.data) {
+        if (node.left !== null) {
+          node = node.left;
+        } else {
+          const newNode = new Node(value);
+          node.left = newNode;
+          return;
+        }
+      } else if (value > node.data) {
+        if (node.right !== null) {
+          node = node.right;
+        } else {
+          const newNode = new Node(value);
+          node.right = newNode;
+          return;
+        }
+      } else {
+        return; // Do nothing when a duplicate is inserted
+      }
+    }
+  }
 }
 
 function buildTree(arr: number[]) {
