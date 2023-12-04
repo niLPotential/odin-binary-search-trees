@@ -76,6 +76,20 @@ Deno.test(function insertTest() {
   prettyPrint(tree.root);
 });
 
+Deno.test(function deleteRootTest() {
+  const arr = [0, 1, 2, 3, 4, 5, 6];
+  const tree = new Tree(arr);
+
+  prettyPrint(tree.root);
+  assertEquals(tree.root?.data, 3);
+
+  tree.delete(1);
+  prettyPrint(tree.root);
+  // assertEquals(tree.root?.data, 2);
+  // assertEquals(tree.root?.right, null);
+  // assertEquals(tree.root?.left?.data, 0);
+});
+
 function prettyPrint(node: Node | null, prefix = "", isLeft = true) {
   if (node === null) {
     return;
