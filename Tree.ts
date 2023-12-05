@@ -59,26 +59,29 @@ export class Tree {
         }
       } else {
         // node found
-        if (prevNode === null) {
-          // remove root
-          this.root = null;
-        } else if (node.left === null && node.right === null) {
+        if (node.left === null && node.right === null) {
           // no children
-          if (node.data < prevNode.data) {
+          if (prevNode === null) {
+            this.root = null;
+          } else if (node.data < prevNode.data) {
             prevNode.left = null;
           } else {
             prevNode.right = null;
           }
         } else if (node.left === null) {
           // node has right child
-          if (node.data < prevNode.data) {
+          if (prevNode === null) {
+            this.root = node.right;
+          } else if (node.data < prevNode.data) {
             prevNode.left = node.right;
           } else {
             prevNode.right = node.right;
           }
         } else if (node.right === null) {
           // node has left child
-          if (node.data < prevNode.data) {
+          if (prevNode === null) {
+            this.root = node.left;
+          } else if (node.data < prevNode.data) {
             prevNode.left = node.left;
           } else {
             prevNode.right = node.left;
@@ -86,15 +89,14 @@ export class Tree {
         } else {
           // two children
           let successor = node.right;
-          // let successorParent = node;
           while (successor.left !== null) {
-            // successorParent = successor;
             successor = successor.left;
           }
-          node.data = successor.data;
-          // successorParent.left = successor.right;
+          const tmp = successor.data;
+          this.delete(successor.data);
+          node.data = tmp;
         }
-        return;
+        return; // delete finished
       }
     }
   }

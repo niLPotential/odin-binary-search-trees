@@ -6,6 +6,8 @@ Deno.test(function buildEmptyTreeTest() {
   const arr: number[] = [];
   const tree = new Tree(arr);
   assertEquals(tree.root, null);
+  tree.delete(0);
+  assertEquals(tree.root, null);
 });
 
 Deno.test(function singleNodeTreeTest() {
@@ -15,6 +17,9 @@ Deno.test(function singleNodeTreeTest() {
   assertEquals(tree.root?.data, 0);
   assertEquals(tree.root?.left, null);
   assertEquals(tree.root?.right, null);
+
+  tree.delete(0);
+  assertEquals(tree.root, null);
 });
 
 Deno.test(function checkDuplicateTest() {
@@ -33,6 +38,9 @@ Deno.test(function twoNodesTest() {
   assertEquals(tree.root?.data, 1);
   assertEquals(tree.root?.left?.data, 0);
   assertEquals(tree.root?.right, null);
+
+  tree.delete(1);
+  assertEquals(tree.root?.data, 0);
 });
 
 Deno.test(function unorderdTest() {
@@ -49,6 +57,10 @@ Deno.test(function unorderdTest() {
   assertEquals(tree.root?.right?.right, null);
   assertEquals(tree.root?.right?.left?.data, 3);
   assertEquals(tree.root?.right?.left?.right, null);
+
+  tree.delete(4);
+  assertEquals(tree.root?.right?.data, 3);
+  assertEquals(tree.root?.right?.left, null);
 });
 
 Deno.test(function longArrTest() {
@@ -59,7 +71,7 @@ Deno.test(function longArrTest() {
   prettyPrint(tree.root);
 });
 
-Deno.test(function insertTest() {
+Deno.test(function insertDeleteTest() {
   const arr = [1, 7, 3, 9, 5];
   const tree = new Tree(arr);
 
@@ -74,20 +86,29 @@ Deno.test(function insertTest() {
   tree.insert(10);
   tree.insert(5); // Does nothing
   prettyPrint(tree.root);
+
+  tree.delete(3);
+  prettyPrint(tree.root);
+
+  tree.delete(9);
+  prettyPrint(tree.root);
+
+  tree.delete(5);
+  prettyPrint(tree.root);
 });
 
 Deno.test(function deleteRootTest() {
-  const arr = [0, 1, 2, 3, 4, 5, 6];
+  const arr = [0, 1, 2];
   const tree = new Tree(arr);
 
   prettyPrint(tree.root);
-  assertEquals(tree.root?.data, 3);
+  assertEquals(tree.root?.data, 1);
 
   tree.delete(1);
   prettyPrint(tree.root);
-  // assertEquals(tree.root?.data, 2);
-  // assertEquals(tree.root?.right, null);
-  // assertEquals(tree.root?.left?.data, 0);
+  assertEquals(tree.root?.data, 2);
+  assertEquals(tree.root?.right, null);
+  assertEquals(tree.root?.left?.data, 0);
 });
 
 function prettyPrint(node: Node | null, prefix = "", isLeft = true) {
