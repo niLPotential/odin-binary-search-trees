@@ -76,4 +76,19 @@ export class Tree {
     }
     return null;
   }
+
+  levelOrder<T>(callback?: (node: Node) => T) {
+    const queue = [this.root];
+    const result = [];
+
+    while (queue.length) {
+      const node = queue.shift();
+      if (node) {
+        result.push(callback ? callback(node) : node.value);
+        node.left && queue.push(node.left);
+        node.right && queue.push(node.right);
+      }
+    }
+    return result;
+  }
 }

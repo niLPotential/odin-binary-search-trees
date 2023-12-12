@@ -93,6 +93,13 @@ Deno.test(function insertDeleteTest() {
   tree.insert(10);
   tree.insert(5); // Does nothing
   prettyPrint(tree.root);
+  assertEquals(tree.levelOrder(), [5, 3, 9, 1, 4, 7, 10, 0, 2, 6, 8]);
+  assertEquals(
+    tree.levelOrder(function (node: Node) {
+      return node.value * 2;
+    }),
+    [10, 6, 18, 2, 8, 14, 20, 0, 4, 12, 16]
+  );
 
   tree.delete(3);
   assertEquals(tree.root?.left?.value, 4);
