@@ -64,4 +64,16 @@ export class Tree {
     }
     this.root = this.root.removeNode(value);
   }
+
+  find(value: number) {
+    let current = this.root;
+
+    while (current) {
+      if (value === current.value) {
+        return current;
+      }
+      current = current.traverse(value);
+    }
+    return null;
+  }
 }

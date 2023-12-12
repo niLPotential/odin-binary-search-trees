@@ -71,6 +71,11 @@ Deno.test(function longArrTest() {
 
   assertEquals(tree.root?.value, 8);
   prettyPrint(tree.root);
+
+  for (const value of arr) {
+    assertEquals(tree.find(value)?.value, value);
+  }
+  assertEquals(tree.find(-1), null);
 });
 
 Deno.test(function insertDeleteTest() {

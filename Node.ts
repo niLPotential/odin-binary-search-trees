@@ -9,6 +9,16 @@ export class Node {
     this.right = null;
   }
 
+  traverse(value: number) {
+    if (value < this.value) {
+      return this.left;
+    } else if (value > this.value) {
+      return this.right;
+    } else {
+      return this;
+    }
+  }
+
   removeNode(value: number) {
     if (value === this.value) {
       // no children
