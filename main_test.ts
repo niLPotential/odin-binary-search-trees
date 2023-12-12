@@ -90,12 +90,17 @@ Deno.test(function insertDeleteTest() {
   prettyPrint(tree.root);
 
   tree.delete(3);
+  assertEquals(tree.root?.left?.value, 4);
+  assertEquals(tree.root?.left?.right, null);
   prettyPrint(tree.root);
 
   tree.delete(9);
+  assertEquals(tree.root?.right?.value, 10);
+  assertEquals(tree.root?.right?.right, null);
   prettyPrint(tree.root);
 
   tree.delete(5);
+  assertEquals(tree.root?.value, 6);
   prettyPrint(tree.root);
 });
 
@@ -114,14 +119,14 @@ Deno.test(function deleteRootTest() {
 });
 
 function prettyPrint(node: Node | null, prefix = "", isLeft = true) {
-  if (node === null) {
+  if (!node) {
     return;
   }
-  if (node.right !== null) {
+  if (node.right) {
     prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
   }
   console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
-  if (node.left !== null) {
+  if (node.left) {
     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 }

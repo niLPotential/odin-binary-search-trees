@@ -41,7 +41,7 @@ export class Tree {
           current = current.left; // go left
         } else {
           const newNode = new Node(value);
-          current.left = newNode; // insert node on left
+          current.left = newNode; // insert node to left
           return;
         }
       } else if (value > current.value) {
@@ -49,7 +49,7 @@ export class Tree {
           current = current.right; // go right
         } else {
           const newNode = new Node(value);
-          current.right = newNode; // insert node on right
+          current.right = newNode; // insert node to right
           return;
         }
       } else {
@@ -59,31 +59,9 @@ export class Tree {
   }
 
   delete(value: number) {
-    return value;
+    if (!this.root) {
+      return;
+    }
+    this.root = this.root.removeNode(value);
   }
 }
-
-// BinarySearchTree.prototype.removeNode = function (node, value) {
-//   if (!node) {
-//     return null;
-//   }
-//   if (value === node.value) {
-//     // no children
-//     if (!node.left && !node.right) return null;
-//     // one child and it’s the right
-//     if (!node.left) node.right;
-//     // one child and it’s the left
-//     if (!node.right) node.left;
-//     // two kids
-//     const temp = this.getMin(node.right);
-//     node.value = temp;
-//     node.right = this.removeNode(node.right, temp);
-//     return node;
-//   } else if (value < node.value) {
-//     node.left = this.removeNode(node.left, value);
-//     return node;
-//   } else {
-//     node.right = this.removeNode(node.right, value);
-//     return node;
-//   }
-// };
