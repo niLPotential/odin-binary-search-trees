@@ -1,10 +1,10 @@
 export class Node {
-  data: number;
+  value: number;
   left: Node | null;
   right: Node | null;
 
-  constructor(data: number) {
-    this.data = data;
+  constructor(value: number) {
+    this.value = value;
     this.left = null;
     this.right = null;
   }

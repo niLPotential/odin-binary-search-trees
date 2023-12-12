@@ -4,8 +4,8 @@ import { checkDuplicate, checkSorted } from "./utils.ts";
 export class Tree {
   root: Node | null;
 
-  constructor(arr: number[]) {
-    this.root = this.buildTree(arr);
+  constructor(arr?: number[]) {
+    this.root = arr ? this.buildTree(arr) : null;
   }
 
   buildTree(arr: number[]) {
@@ -27,25 +27,29 @@ export class Tree {
   }
 
   insert(value: number) {
-    let node = this.root;
+    if (!this.root) {
+      const newNode = new Node(value);
+      this.root = newNode;
+      return;
+    }
 
-    while (node !== null) {
-      if (value < node.data) {
-        // go left
-        if (node.left !== null) {
-          node = node.left;
+    let current = this.root;
+
+    while (current) {
+      if (value < current.value) {
+        if (current.left) {
+          current = current.left; // go left
         } else {
           const newNode = new Node(value);
-          node.left = newNode;
+          current.left = newNode; // insert node on left
           return;
         }
-      } else if (value > node.data) {
-        // go right
-        if (node.right !== null) {
-          node = node.right;
+      } else if (value > current.value) {
+        if (current.right) {
+          current = current.right; // go right
         } else {
           const newNode = new Node(value);
-          node.right = newNode;
+          current.right = newNode; // insert node on right
           return;
         }
       } else {
@@ -55,67 +59,31 @@ export class Tree {
   }
 
   delete(value: number) {
-    let node = this.root;
-    let prevNode = null;
-
-    while (node !== null) {
-      if (value < node.data) {
-        // go left
-        if (node.left !== null) {
-          prevNode = node;
-          node = node.left;
-        } else {
-          return; // node not found; do nothing
-        }
-      } else if (value > node.data) {
-        //go right
-        if (node.right !== null) {
-          prevNode = node;
-          node = node.right;
-        } else {
-          return; // node not found; do nothing
-        }
-      } else {
-        // node found
-        if (node.left === null && node.right === null) {
-          // no children
-          if (prevNode === null) {
-            this.root = null;
-          } else if (node.data < prevNode.data) {
-            prevNode.left = null;
-          } else {
-            prevNode.right = null;
-          }
-        } else if (node.left === null) {
-          // node has right child
-          if (prevNode === null) {
-            this.root = node.right;
-          } else if (node.data < prevNode.data) {
-            prevNode.left = node.right;
-          } else {
-            prevNode.right = node.right;
-          }
-        } else if (node.right === null) {
-          // node has left child
-          if (prevNode === null) {
-            this.root = node.left;
-          } else if (node.data < prevNode.data) {
-            prevNode.left = node.left;
-          } else {
-            prevNode.right = node.left;
-          }
-        } else {
-          // two children
-          let successor = node.right;
-          while (successor.left !== null) {
-            successor = successor.left;
-          }
-          const tmp = successor.data;
-          this.delete(successor.data);
-          node.data = tmp;
-        }
-        return; // delete finished
-      }
-    }
+    return value;
   }
 }
+
+// BinarySearchTree.prototype.removeNode = function (node, value) {
+//   if (!node) {
+//     return null;
+//   }
+//   if (value === node.value) {
+//     // no children
+//     if (!node.left && !node.right) return null;
+//     // one child and it’s the right
+//     if (!node.left) node.right;
+//     // one child and it’s the left
+//     if (!node.right) node.left;
+//     // two kids
+//     const temp = this.getMin(node.right);
+//     node.value = temp;
+//     node.right = this.removeNode(node.right, temp);
+//     return node;
+//   } else if (value < node.value) {
+//     node.left = this.removeNode(node.left, value);
+//     return node;
+//   } else {
+//     node.right = this.removeNode(node.right, value);
+//     return node;
+//   }
+// };
