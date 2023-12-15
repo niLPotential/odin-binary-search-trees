@@ -79,17 +79,30 @@ export class Tree {
 
   levelOrder<T>(callback?: (node: Node) => T) {
     const queue = [this.root];
-    const result = [];
 
-    while (queue.length) {
-      const node = queue.shift();
-      if (node) {
-        result.push(callback ? callback(node) : node.value);
-        node.left && queue.push(node.left);
-        node.right && queue.push(node.right);
+    if (callback) {
+      const result = [];
+      while (queue.length) {
+        const node = queue.shift();
+        if (node) {
+          result.push(callback(node));
+          node.left && queue.push(node.left);
+          node.right && queue.push(node.right);
+        }
       }
+      return result;
+    } else {
+      const result = [];
+      while (queue.length) {
+        const node = queue.shift();
+        if (node) {
+          result.push(node.value);
+          node.left && queue.push(node.left);
+          node.right && queue.push(node.right);
+        }
+      }
+      return result;
     }
-    return result;
   }
 
   inOrder<T>(callback?: (node: Node) => T) {
