@@ -47,4 +47,43 @@ export class Node {
     }
     return current.value;
   }
+
+  inOrder() {
+    let queue: Node[] = [];
+
+    if (this.left) {
+      queue = queue.concat(this.left.inOrder());
+    }
+    queue.push(this);
+    if (this.right) {
+      queue = queue.concat(this.right.inOrder());
+    }
+    return queue;
+  }
+
+  preOrder() {
+    let queue: Node[] = [];
+
+    queue.push(this);
+    if (this.left) {
+      queue = queue.concat(this.left.preOrder());
+    }
+    if (this.right) {
+      queue = queue.concat(this.right.preOrder());
+    }
+    return queue;
+  }
+
+  postOrder() {
+    let queue: Node[] = [];
+
+    if (this.left) {
+      queue = queue.concat(this.left.postOrder());
+    }
+    if (this.right) {
+      queue = queue.concat(this.right.postOrder());
+    }
+    queue.push(this);
+    return queue;
+  }
 }

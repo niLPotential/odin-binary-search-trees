@@ -101,6 +101,30 @@ Deno.test(function insertDeleteTest() {
     [10, 6, 18, 2, 8, 14, 20, 0, 4, 12, 16]
   );
 
+  assertEquals(tree.inOrder(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  assertEquals(
+    tree.inOrder(function (node: Node) {
+      return node.value + 2;
+    }),
+    [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  );
+
+  assertEquals(tree.preOrder(), [5, 3, 1, 0, 2, 4, 9, 7, 6, 8, 10]);
+  assertEquals(
+    tree.preOrder(function (node: Node) {
+      return node.value * 2;
+    }),
+    [10, 6, 2, 0, 4, 8, 18, 14, 12, 16, 20]
+  );
+
+  assertEquals(tree.postOrder(), [0, 2, 1, 4, 3, 6, 8, 7, 10, 9, 5]);
+  assertEquals(
+    tree.postOrder(function (node: Node) {
+      return node.value * 2;
+    }),
+    [0, 4, 2, 8, 6, 12, 16, 14, 20, 18, 10]
+  );
+
   tree.delete(3);
   assertEquals(tree.root?.left?.value, 4);
   assertEquals(tree.root?.left?.right, null);

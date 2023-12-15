@@ -91,4 +91,37 @@ export class Tree {
     }
     return result;
   }
+
+  inOrder<T>(callback?: (node: Node) => T) {
+    if (!this.root) {
+      return [];
+    }
+
+    const queue = this.root.inOrder();
+    return callback
+      ? queue.map((node) => callback(node))
+      : queue.map((node) => node.value);
+  }
+
+  preOrder<T>(callback?: (node: Node) => T) {
+    if (!this.root) {
+      return [];
+    }
+
+    const queue = this.root.preOrder();
+    return callback
+      ? queue.map((node) => callback(node))
+      : queue.map((node) => node.value);
+  }
+
+  postOrder<T>(callback?: (node: Node) => T) {
+    if (!this.root) {
+      return [];
+    }
+
+    const queue = this.root.postOrder();
+    return callback
+      ? queue.map((node) => callback(node))
+      : queue.map((node) => node.value);
+  }
 }
