@@ -157,4 +157,10 @@ export class Tree {
 
     return count;
   }
+
+  isBalanced() {
+    return this.postOrder((node) => node.isBalanced()).every(
+      (value) => value === true
+    );
+  }
 }

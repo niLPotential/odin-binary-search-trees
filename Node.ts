@@ -99,4 +99,18 @@ export class Node {
     }
     return leftHeight > rightHeight ? leftHeight : rightHeight;
   }
+
+  isBalanced() {
+    let leftHeight = 0;
+    let rightHeight = 0;
+
+    if (this.left) {
+      leftHeight = this.left.height() + 1;
+    }
+    if (this.right) {
+      rightHeight = this.right.height() + 1;
+    }
+
+    return Math.abs(leftHeight - rightHeight) <= 1;
+  }
 }

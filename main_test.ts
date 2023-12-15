@@ -1,4 +1,7 @@
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts";
+import {
+  assert,
+  assertEquals,
+} from "https://deno.land/std@0.208.0/assert/mod.ts";
 import { Node } from "./Node.ts";
 import { Tree } from "./Tree.ts";
 
@@ -139,6 +142,8 @@ Deno.test(function insertDeleteTest() {
     [0, 4, 2, 8, 6, 12, 16, 14, 20, 18, 10]
   );
 
+  assert(tree.isBalanced());
+
   assertEquals(tree.depth(tree.root?.right as Node), 1);
   assertEquals(tree.depth(tree.root?.right?.right as Node), 2);
 
@@ -146,6 +151,7 @@ Deno.test(function insertDeleteTest() {
   assertEquals(tree.root?.left?.value, 4);
   assertEquals(tree.root?.left?.right, null);
   prettyPrint(tree.root);
+  assert(!tree.isBalanced());
 
   tree.delete(9);
   assertEquals(tree.root?.right?.value, 10);
