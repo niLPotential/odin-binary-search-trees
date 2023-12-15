@@ -137,4 +137,24 @@ export class Tree {
       ? queue.map((node) => callback(node))
       : queue.map((node) => node.value);
   }
+
+  depth(node: Node) {
+    if (!this.root) {
+      return null;
+    }
+
+    let count = 0;
+    let current = this.root;
+    while (current.value !== node.value) {
+      const next = current.traverse(node.value);
+      if (next) {
+        current = next;
+        count++;
+      } else {
+        return null;
+      }
+    }
+
+    return count;
+  }
 }

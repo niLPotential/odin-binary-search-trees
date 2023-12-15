@@ -6,11 +6,12 @@ Deno.test(function buildEmptyTreeTest() {
   const arr: number[] = [];
   const tree = new Tree(arr);
   assertEquals(tree.root, null);
+  assertEquals(tree.depth(tree.root as Node), null);
+
   tree.delete(0);
   assertEquals(tree.root, null);
   tree.insert(100);
   assertEquals(tree.root?.value, 100);
-  assertEquals(tree.root?.height(), 0);
 });
 
 Deno.test(function singleNodeTreeTest() {
@@ -21,6 +22,7 @@ Deno.test(function singleNodeTreeTest() {
   assertEquals(tree.root?.left, null);
   assertEquals(tree.root?.right, null);
   assertEquals(tree.root?.height(), 0);
+  assertEquals(tree.depth(tree.root as Node), 0);
 
   tree.delete(0);
   assertEquals(tree.root, null);
@@ -43,6 +45,7 @@ Deno.test(function twoNodesTest() {
   assertEquals(tree.root?.left?.value, 0);
   assertEquals(tree.root?.right, null);
   assertEquals(tree.root?.height(), 1);
+  assertEquals(tree.depth(tree.root?.left as Node), 1);
 
   tree.delete(1);
   assertEquals(tree.root?.value, 0);
@@ -62,6 +65,12 @@ Deno.test(function unorderdTest() {
   assertEquals(tree.root?.right?.right, null);
   assertEquals(tree.root?.right?.left?.value, 3);
   assertEquals(tree.root?.right?.left?.right, null);
+
+  assertEquals(tree.depth(tree.root as Node), 0);
+  assertEquals(tree.depth(tree.root?.left as Node), 1);
+  assertEquals(tree.depth(tree.root?.left as Node), 1);
+  assertEquals(tree.depth(tree.root?.left?.left as Node), 2);
+  assertEquals(tree.depth(tree.root?.left?.left as Node), 2);
 
   tree.delete(4);
   assertEquals(tree.root?.right?.value, 3);
@@ -129,6 +138,9 @@ Deno.test(function insertDeleteTest() {
     }),
     [0, 4, 2, 8, 6, 12, 16, 14, 20, 18, 10]
   );
+
+  assertEquals(tree.depth(tree.root?.right as Node), 1);
+  assertEquals(tree.depth(tree.root?.right?.right as Node), 2);
 
   tree.delete(3);
   assertEquals(tree.root?.left?.value, 4);
