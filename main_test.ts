@@ -10,6 +10,7 @@ Deno.test(function buildEmptyTreeTest() {
   assertEquals(tree.root, null);
   tree.insert(100);
   assertEquals(tree.root?.value, 100);
+  assertEquals(tree.root?.height(), 0);
 });
 
 Deno.test(function singleNodeTreeTest() {
@@ -19,6 +20,7 @@ Deno.test(function singleNodeTreeTest() {
   assertEquals(tree.root?.value, 0);
   assertEquals(tree.root?.left, null);
   assertEquals(tree.root?.right, null);
+  assertEquals(tree.root?.height(), 0);
 
   tree.delete(0);
   assertEquals(tree.root, null);
@@ -40,6 +42,7 @@ Deno.test(function twoNodesTest() {
   assertEquals(tree.root?.value, 1);
   assertEquals(tree.root?.left?.value, 0);
   assertEquals(tree.root?.right, null);
+  assertEquals(tree.root?.height(), 1);
 
   tree.delete(1);
   assertEquals(tree.root?.value, 0);
@@ -63,6 +66,8 @@ Deno.test(function unorderdTest() {
   tree.delete(4);
   assertEquals(tree.root?.right?.value, 3);
   assertEquals(tree.root?.right?.left, null);
+
+  assertEquals(tree.root?.height(), 2);
 });
 
 Deno.test(function longArrTest() {

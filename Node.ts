@@ -86,4 +86,17 @@ export class Node {
     queue.push(this);
     return queue;
   }
+
+  height() {
+    let leftHeight = 0;
+    let rightHeight = 0;
+
+    if (this.left) {
+      leftHeight = this.left.height() + 1;
+    }
+    if (this.right) {
+      rightHeight = this.right.height() + 1;
+    }
+    return leftHeight > rightHeight ? leftHeight : rightHeight;
+  }
 }
