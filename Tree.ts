@@ -163,4 +163,10 @@ export class Tree {
       (value) => value === true
     );
   }
+
+  rebalance() {
+    if (!this.isBalanced()) {
+      this.root = this.buildTree(this.inOrder());
+    }
+  }
 }

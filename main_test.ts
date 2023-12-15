@@ -153,13 +153,13 @@ Deno.test(function insertDeleteTest() {
   prettyPrint(tree.root);
   assert(!tree.isBalanced());
 
-  tree.delete(9);
-  assertEquals(tree.root?.right?.value, 10);
-  assertEquals(tree.root?.right?.right, null);
-  prettyPrint(tree.root);
-
   tree.delete(5);
   assertEquals(tree.root?.value, 6);
+  assertEquals(tree.root?.right?.left?.left, null);
+  prettyPrint(tree.root);
+  assert(!tree.isBalanced());
+  tree.rebalance();
+  assert(tree.isBalanced());
   prettyPrint(tree.root);
 });
 
